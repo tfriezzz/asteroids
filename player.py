@@ -2,9 +2,13 @@ from circleshape import*
 from constants import*
 
 class Player(CircleShape):
+
     def __init__(self, x, y, PLAYER_RADIUS):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
+        if hasattr(Player, "containers") and len(Player.containers) > 0:
+            for i in Player.containers:
+                i.add(self)
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
