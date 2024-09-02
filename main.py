@@ -18,6 +18,7 @@ def main():
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = updatable
+    Shot.containers = (updatable, drawable)
 
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
@@ -27,6 +28,7 @@ def main():
     print(f"Updatable group size: {len(updatable)}")
     print(f"Drawable group size: {len(drawable)}")
 
+    # Game loop
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
