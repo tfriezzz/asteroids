@@ -6,6 +6,7 @@ class Player(CircleShape):
 
     def __init__(self, x, y, PLAYER_RADIUS):
         super().__init__(x, y, PLAYER_RADIUS)
+        self.cooldown_timer = 0
         self.rotation = 0
         if hasattr(Player, "containers") and len(Player.containers) > 0:
             for i in Player.containers:
@@ -26,6 +27,7 @@ class Player(CircleShape):
         self.rotation += PLAYER_TURN_SPEED * dt
 
     def update(self, dt):
+        self.cooldown_timer -= dt
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
@@ -44,7 +46,9 @@ class Player(CircleShape):
         self.position += forward * PLAYER_SPEED * dt
 
     def shoot(self, dt):
-        shot = Shot(self.position.x, self.position.y, SHOT_RADIUS, self.rotation)
-        forward = pygame.Vector2(0, 1).rotate(shot.rotation)
-        shot.position += forward * PLAYER_SHOOT_SPEED * dt
+        if self.cooldown_timer < 0:
+            shot = Shot(self.position.x, self.position.y, SHOT_RADIUS, self.rotation)
+            forward = pygame.Vector2(0, 1).rotate(shot.rotation)
+            shot.position += forward * PLAYER_SHOOT_SPEED * dt
+            self.cooldown_timer = PLAYER_SHOOT_COOLDOWN
 
