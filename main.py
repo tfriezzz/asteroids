@@ -43,5 +43,10 @@ def main():
         for updatable_object in updatable:
             updatable_object.update(dt)
 
+        for asteroid in asteroids:
+            if asteroid.is_colliding(player):
+                print("Game over!")
+                exit()
+
 if __name__ == "__main__":
     main()
