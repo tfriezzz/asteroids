@@ -3,10 +3,14 @@ from constants import*
 import random
 
 
+random_angle = random.randint(-30, 30)
+
 class Asteroid(CircleShape):
+
+
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
-        self.rotation = 0
+        self.rotation = random_angle
         if hasattr(Asteroid, "containers") and len(Asteroid.containers) > 0:
                 for i in Asteroid.containers:
                     i.add(self)
@@ -28,13 +32,14 @@ class Asteroid(CircleShape):
             angle = vector.as_polar()
             #vector_2 = self.velocity.rotate(-random_angle)
             new_radius = self.radius - ASTEROID_MIN_RADIUS
+            parent_angle = (self.velocity.as_polar()[1])
 
             asteroid_1 = Asteroid(self.position.x, self.position.y, new_radius)
-            asteroid_1.rotation = angle[1]
+            asteroid_1.rotation = parent_angle
             asteroid_1.velocity = vector * 1.2
 
             asteroid_2 = Asteroid(self.position.x, self.position.y, new_radius)
-            asteroid_2.rotation = -angle[1]
+            asteroid_2.rotation = -parent_angle
             asteroid_2.velocity = vector * 1.2
 
 
